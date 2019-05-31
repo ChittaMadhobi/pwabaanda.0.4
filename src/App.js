@@ -20,36 +20,73 @@ class App extends Component {
     sideDrawerOpen: false
   };
 
+  componentWillMount() {
+    localStorage.clear();
+    console.log('in app.js componentwillmount');
+  }
+
   drawerToggleClickHandler = () => {
+    if (this.state.sideDrawerOpen) {
+      localStorage.setItem('backdrop', 'close');
+    } else {
+      localStorage.setItem("backdrop", "open");
+    }
+    
     this.setState(prevState => {
       return { sideDrawerOpen: !prevState.sideDrawerOpen };
     });
+    let yy = localStorage.getItem('backdrop');
+    console.log('drawToggleClickHandler:' + yy);
+    if (yy === 'close') {
+      this.setState({ sideDrawerOpen: false });
+    }
   };
 
   backdropClickHandler = () => {
     this.setState({ sideDrawerOpen: false });
   };
 
+  onSignupClick = () => {
+    console.log("in onSignupClick");
+    this.setState({ sideDrawerOpen: false });
+    localStorage.removeItem('loggedout')
+  };
+
+  onLogoutClick = () => {
+    console.log("logging out");
+    this.setState({ sideDrawerOpen: false });
+    localStorage.setItem('loggedout', 'yes');
+    // return <Redirect to="/login" />;
+  };
+
   render() {
-    // let sideDrawer;
     let backdrop;
+    let loggedout= localStorage.getItem('loggedout');
+    console.log('cloggedout:' + loggedout);
 
     if (this.state.sideDrawerOpen) {
       // sideDrawer = <SideDrawer />;
       backdrop = <Backdrop CloseSideDrawer={this.backdropClickHandler} />;
     }
 
+    let redirectToLogin;
+    if ( loggedout === 'yes') {
+      console.log('Loging redirection if possible');
+      redirectToLogin = <Login />
+    }
+
     return (
       <Provider store={store}>
         <Router>
           <div className="total-space">
-            <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
-            <SideDrawer show={this.state.sideDrawerOpen} />
+            <Toolbar drawerClickHandler={this.drawerToggleClickHandler} onSignupClickApp={this.onSignupClick} onLogoutClickApp={this.onLogoutClick}/>
+            <SideDrawer show={this.state.sideDrawerOpen} onSignupClickApp={this.onSignupClick} onLogoutClickApp={this.onLogoutClick}/>
             {backdrop}
             <div className="container">
               <div className="navbar-space">
-                <h6 className="text-center">Build Together, Band Together, Bond Together</h6>
+                <h6 className="text-center">Build Together - Band Together - Bond Together</h6>
               </div>
+              {redirectToLogin}
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
             </div>

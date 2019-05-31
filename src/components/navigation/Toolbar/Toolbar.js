@@ -12,10 +12,6 @@ class Toolbar extends Component {
     };
   }
 
-  onLogoutClick = () => {
-    alert("loggig out");
-  };
-
   render() {
     let isAuthenticated = true;
     let user = { name: "Sarbojit Mukherjee" };
@@ -32,18 +28,10 @@ class Toolbar extends Component {
             </li>
             <li>
               <button
-                onClick={this.onLogoutClick}
+                onClick={this.props.onLogoutClickApp}
                 className="transparent-button"
               >
-                {user.name} &nbsp;&nbsp;
-                {/* <img
-                  className="rounded-circle"
-                  src={user.avatar}
-                  style={{ width: "25px", marginRight: "5px" }}
-                  alt={user.name}
-                  title="You email should be Gravitar"
-                />{" "} */}
-                Logout
+                {user.name} &nbsp;&nbsp; Logout
               </button>
             </li>
           </ul>
@@ -52,13 +40,13 @@ class Toolbar extends Component {
     } else {
       navbardisp = (
         <div>
-          <ul >
-            <li >
+          <ul>
+            <li>
               <Link className="nav-link" to="/register">
                 Sign Up
               </Link>
             </li>
-            <li >
+            <li>
               <Link className="nav-link" to="/login">
                 Login
               </Link>

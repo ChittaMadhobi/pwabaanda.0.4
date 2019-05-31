@@ -8,20 +8,26 @@ class SideDrawer extends Component {
     super(props);
 
     this.state = {
-      name: ""
+      name: "",
+      closeDrawer: false
     };
   }
 
-  onLogoutClick = () => {
-    alert("loggig out");
-  };
+  // onLogoutClick = () => {
+  //   // alert("loggig out");
+  //   console.log("logging out");
+  // };
+
 
   render() {
+    let aa = localStorage.getItem("backdrop");
+    console.log('aa:' + aa);
+
     let drawerClasses = "side-drawer";
     if (this.props.show) {
       drawerClasses = "side-drawer open";
     }
-    //---------------
+
     let isAuthenticated = true;
     let user = { name: "Sarbojit Mukherjee" };
     let navbardisp;
@@ -31,23 +37,17 @@ class SideDrawer extends Component {
           <ul>
             <li>
               <h6>{user.name}</h6>
-              {/* <img
-                  className="rounded-circle"
-                  src={user.avatar}
-                  style={{ width: "25px", marginRight: "5px" }}
-                  alt={user.name}
-                  title="You email should be Gravitar"
-                />{" "} */}
             </li>
             <li>
-              <Link  to="/">
-                <div className="font-color">&nbsp;MyAccount</div> 
+              <Link to="/">
+                <div className="font-color">&nbsp;MyAccount</div>
               </Link>
             </li>
             <li>
+
               <button
-                onClick={this.onLogoutClick}
-                className="transparent-button"
+                onClick={this.props.onLogoutClickApp}
+                className="transparent-button-d"
               >
                 <div className="font-color">Logout</div>
               </button>
@@ -60,12 +60,12 @@ class SideDrawer extends Component {
         <div>
           <ul>
             <li>
-              <Link className="nav-link" to="/register">
+              <Link to="/register" onClick={this.props.onSignupClickApp}>
                 Sign Up
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/login">
+              <Link to="/login" onClick={this.props.onSignupClickApp}>
                 Login
               </Link>
             </li>
@@ -74,11 +74,7 @@ class SideDrawer extends Component {
       );
     }
 
-    return (
-      <nav className={drawerClasses}>
-        {navbardisp}
-      </nav>
-    );
+    return <nav className={drawerClasses}>{navbardisp}</nav>;
   }
 }
 export default SideDrawer;
