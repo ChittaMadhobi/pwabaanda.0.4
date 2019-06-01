@@ -84,7 +84,7 @@ class App extends Component {
             {backdrop}
             <div className="container">
               <div className="navbar-space">
-                <h6 className="text-center">Build Together - Band Together - Bond Together</h6>
+                <h6 className="text-center">Build Together, Band Together, Bond Together</h6>
               </div>
               {redirectToLogin}
               <Route exact path="/register" component={Register} />
